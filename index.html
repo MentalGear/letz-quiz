@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spreechwierder Quiz</title>
+    <style>
+        :root {
+            --primary: #00A3E0; /* Luxembourg Blue */
+            --secondary: #EF3340; /* Luxembourg Red */
+            --bg: #f4f7f6;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- Settings Screen --- */
+        #settings-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .setting-group {
+            margin: 20px 0;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        select, input, button {
+            padding: 12px;
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+            margin-top: 8px;
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: opacity 0.2s;
+        }
+
+        button:hover { opacity: 0.9; }
+
+        /* --- Game Screen --- */
+        #game-screen {
+            display: none;
+            height: 100%;
+            flex-direction: column;
+        }
+
+        .card-container {
+            flex: 1;
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .card-container::-webkit-scrollbar { display: none; }
+
+        .card {
+            flex: 0 0 100%;
+            scroll-snap-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        .card-content {
+            background: var(--card-bg);
+            width: 100%;
+            max-width: 400px;
+            min-height: 300px;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .divider {
+            height: 2px;
+            background: #eee;
+            margin: 20px 0;
+            width: 50%;
+            align-self: center;
+        }
+
+        .saying-text {
+            font-size: 1.4rem;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        .translation-text {
+            font-size: 1rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        /* --- Animation Logic --- */
+        .word {
+            display: inline-block;
+            opacity: 0;
+            filter: blur(10px);
+            transform: translateY(5px);
+            transition: opacity 0.5s, filter 0.5s, transform 0.5s;
+            margin-right: 5px;
+        }
+
+        .word.revealed {
+            opacity: 1;
+            filter: blur(0px);
+            transform: translateY(0);
+        }
+
+        .reveal-btn {
+            margin-top: 30px;
+            width: auto;
+            padding: 12px 40px;
+            border-radius: 50px;
+        }
+
+        .nav-info {
+            padding: 10px;
+            color: #888;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="settings-screen">
+        <h1>🇱🇺 Spreechwierder</h1>
+        <div class="setting-group">
+            <label>Number of Rounds</label>
+            <input type="number" id="rounds" value="5" min="1" max="10">
+        </div>
+        <div class="setting-group">
+            <label>Game Mode</label>
+            <select id="mode">
+                <option value="lu">Luxembourgish Only</option>
+                <option value="literal">LU + English Literal</option>
+                <option value="correct">LU + English Equivalent</option>
+            </select>
+        </div>
+        <button onclick="startGame()">Start Game</button>
+    </div>
+
+    <div id="game-screen">
+        <div class="nav-info">Swipe to move • <span id="progress">1/5</span></div>
+        <div class="card-container" id="card-slider">
+            </div>
+        <div style="padding: 20px; display: flex; justify-content: center;">
+            <button class="reveal-btn" id="reveal-btn" onclick="revealCurrentCard()">Reveal Solution</button>
+        </div>
+    </div>
+
+    <script>
+        const dataset = [
+            {
+                lu_part1: "Den Honger",
+                lu_part2: "ass de beschte Kach.",
+                en_literal: "The hunger is the best cook.",
+                en_correct: "Hunger is the best sauce.",
+            },
+            {
+                lu_part1: "Moiesstonn",
+                lu_part2: "huet Gold am Mond.",
+                en_literal: "Morning hour has gold in the mouth.",
+                en_correct: "The early bird catches the worm.",
+            },
+            {
+                lu_part1: "Stëll Waasser",
+                lu_part2: "sinn déif.",
+                en_literal: "Still waters are deep.",
+                en_correct: "Still waters run deep.",
+            },
+            {
+                lu_part1: "Wéi een an de Bësch rufft,",
+                lu_part2: "sou schallt et zréck.",
+                en_literal: "How one into the forest calls, so echoes it back.",
+                en_correct: "What goes around comes around.",
+            },
+            {
+                lu_part1: "Besser eng Spatz an der Hand",
+                lu_part2: "wéi eng Dauf um Daach.",
+                en_literal: "Better a sparrow in the hand than a pigeon on the roof.",
+                en_correct: "A bird in the hand is worth two in the bush.",
+            },
+            {
+                lu_part1: "Deen engem anere eng Grouf gëtt,",
+                lu_part2: "fält selwer dran.",
+                en_literal: "Who for another a pit digs, falls himself in.",
+                en_correct: "Harm set, harm get.",
+            },
+            {
+                lu_part1: "Et ass net alles Gold,",
+                lu_part2: "wat blénkt.",
+                en_literal: "It is not all gold that glitters.",
+                en_correct: "All that glitters is not gold.",
+            },
+            {
+                lu_part1: "Wat de Bauer net kennt,",
+                lu_part2: "dat ësst hien net.",
+                en_literal: "What the farmer doesn't know, that eats he not.",
+                en_correct: "People fear what they don't understand.",
+            }
+        ];
+
+        let gameCards = [];
+        let currentIndex = 0;
+
+        function startGame() {
+            const rounds = document.getElementById('rounds').value;
+            const mode = document.getElementById('mode').value;
+            
+            // Shuffle and pick rounds
+            const shuffled = [...dataset].sort(() => 0.5 - Math.random());
+            gameCards = shuffled.slice(0, rounds);
+
+            renderCards(mode);
+            
+            document.getElementById('settings-screen').style.display = 'none';
+            document.getElementById('game-screen').style.display = 'flex';
+            updateProgress();
+        }
+
+        function renderCards(mode) {
+            const slider = document.getElementById('card-slider');
+            slider.innerHTML = '';
+
+            gameCards.forEach((item, idx) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                
+                let translationHTML = '';
+                if (mode !== 'lu') {
+                    const transText = mode === 'literal' ? item.en_literal : item.en_correct;
+                    translationHTML = `
+                        <div class="divider"></div>
+                        <div class="translation-text">${transText}</div>
+                    `;
+                }
+
+                card.innerHTML = `
+                    <div class="card-content">
+                        <div class="saying-text">
+                            <span class="part1">${item.lu_part1}</span>
+                            <span class="part2" id="part2-${idx}">${prepareWords(item.lu_part2)}</span>
+                        </div>
+                        ${translationHTML}
+                    </div>
+                `;
+                slider.appendChild(card);
+            });
+
+            // Tracking scroll position for index
+            slider.addEventListener('scroll', () => {
+                const newIndex = Math.round(slider.scrollLeft / window.innerWidth);
+                if(newIndex !== currentIndex) {
+                    currentIndex = newIndex;
+                    updateProgress();
+                }
+            });
+        }
+
+        function prepareWords(text) {
+            return text.split(' ').map(word => `<span class="word">${word}</span>`).join(' ');
+        }
+
+        function revealCurrentCard() {
+            const words = document.querySelectorAll(`#part2-${currentIndex} .word`);
+            words.forEach((word, i) => {
+                setTimeout(() => {
+                    word.classList.add('revealed');
+                }, i * 150); // Word by word delay
+            });
+        }
+
+        function updateProgress() {
+            document.getElementById('progress').innerText = `${currentIndex + 1} / ${gameCards.length}`;
+        }
+    </script>
+</body>
+</html>
