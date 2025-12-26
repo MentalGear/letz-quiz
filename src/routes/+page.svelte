@@ -159,7 +159,7 @@
             <button class="btn-primary" on:click={startGame}>Start Game</button>
 
 
-            <div class="control" style="margin-top: 50px">
+            <div class="control" style="margin-top: 50px; opacity: 0.5">
                 <label>Theme</label>
                 <select bind:value={themeMode} on:change={() => setTheme(themeMode)}>
                     <option value="light">Light Mode</option>
