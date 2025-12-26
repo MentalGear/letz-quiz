@@ -1,0 +1,442 @@
+[
+  {
+    "lu_part1": "Wien A seet, muss och B soen.",
+    "lu_part2": "",
+    "en_literal_p1": "If A sees, B must also say.",
+    "en_literal_p2": "",
+    "en_correct_p1": "If one person sees, another must also say.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Wann d'Aarbecht ee räich méich, da wier den Iesel méi räich wéi de Mëller.",
+    "lu_part2": "",
+    "en_literal_p1": "When work makes one rich, the donkey becomes richer than the miller.",
+    "en_literal_p2": "",
+    "en_correct_p1": "When work makes one rich, the donkey becomes richer than the miller.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Vun der Aarbecht gëtt kee fett.",
+    "lu_part2": "",
+    "en_literal_p1": "From work, no one gets fat.",
+    "en_literal_p2": "",
+    "en_correct_p1": "From work, no one gets fat.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Dat Aalt dauert am längsten.",
+    "lu_part2": "",
+    "en_literal_p1": "The old lasts the longest.",
+    "en_literal_p2": "",
+    "en_correct_p1": "The old lasts the longest.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Besser e midden Aarm, wéi een eidelen Daarm.",
+    "lu_part2": "",
+    "en_literal_p1": "Better a poor arm than a noble intestine.",
+    "en_literal_p2": "",
+    "en_correct_p1": "Better a poor arm than a noble intestine.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Aarm sinn ass keng Schan.",
+    "lu_part2": "",
+    "en_literal_p1": "Poorness is not a shame.",
+    "en_literal_p2": "",
+    "en_correct_p1": "Poorness is not a shame.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "D'Aarmut ass e Sträitmécher.",
+    "lu_part2": "",
+    "en_literal_p1": "Poverty is a quarrel maker.",
+    "en_literal_p2": "",
+    "en_correct_p1": "Poverty is a quarrel maker.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Hien huet mech net emol mam Aasch bekuckt (hien huet mech total ignoréiert).",
+    "lu_part2": "",
+    "en_literal_p1": "He didn't even look at me with his eyes (he completely ignored me).",
+    "en_literal_p2": "",
+    "en_correct_p1": "He didn't even look at me with his eyes (he completely ignored me).",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Adam an Éiv waren déi zwéin éischt Äppeldéif.",
+    "lu_part2": "",
+    "en_literal_p1": "Adam and Eve were the first two apple thieves.",
+    "en_literal_p2": "",
+    "en_correct_p1": "Adam and Eve were the first two apple thieves.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Aus den Aen, aus dem Sënn.",
+    "lu_part2": "",
+    "en_literal_p1": "Out of the eyes, out of the mind.",
+    "en_literal_p2": "",
+    "en_correct_p1": "Out of the eyes, out of the mind.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Véier Ae gesi méi wéi zwee.",
+    "lu_part2": "",
+    "en_literal_p1": "Four eyes see more than two.",
+    "en_literal_p2": "",
+    "en_correct_p1": "Four eyes see more than two.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "D'Aen op oder de Beidel.",
+    "lu_part2": "",
+    "en_literal_p1": "The eyes up or the bag.",
+    "en_literal_p2": "",
+    "en_correct_p1": "The eyes up or the bag.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Wat een net ännere kann, soll ee roueg erdroen.",
+    "lu_part2": "",
+    "en_literal_p1": "What one cannot change, one should calmly endure.",
+    "en_literal_p2": "",
+    "en_correct_p1": "What one cannot change, one should calmly endure.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Näischt gesot ass och eng Äntwert.",
+    "lu_part2": "",
+    "en_literal_p1": "Nothing said is also an answer.",
+    "en_literal_p2": "",
+    "en_correct_p1": "Nothing said is also an answer.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Een Af mécht der honnert.",
+    "lu_part2": "",
+    "en_literal_p1": "One monkey makes a hundred.",
+    "en_literal_p2": "",
+    "en_correct_p1": "One monkey makes a hundred.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Engem Af geet alles gutt.",
+    "lu_part2": "",
+    "en_literal_p1": "Everything tastes good to a monkey.",
+    "en_literal_p2": "",
+    "en_correct_p1": "Everything tastes good to a monkey.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Ech ginn der gläich en Akkont! (du kriss gläich Streech!).",
+    "lu_part2": "",
+    "en_literal_p1": "I'll give you an account right away! (you'll get a fight right away!).",
+    "en_literal_p2": "",
+    "en_correct_p1": "I'll give you an account right away! (you'll get a fight right away!).",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Léier keen alen Af Grimasse maachen.",
+    "lu_part2": "",
+    "en_literal_p1": "Don't let an old monkey make grimaces.",
+    "en_literal_p2": "",
+    "en_correct_p1": "Don't let an old monkey make grimaces.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Al Eisen, ale Goss, al Fraen, ale Verdross.",
+    "lu_part2": "",
+    "en_literal_p1": "All iron, all goose, all women, all annoyance.",
+    "en_literal_p2": "",
+    "en_correct_p1": "All iron, all goose, all women, all annoyance.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "En ale Kniecht an eng jonk Mod gëtt gär e grousse Stot.",
+    "lu_part2": "",
+    "en_literal_p1": "An old servant and a young girl get a big push.",
+    "en_literal_p2": "",
+    "en_correct_p1": "An old servant and a young girl get a big push.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Bei den Alen ass ee gutt gehalen.",
+    "lu_part2": "",
+    "en_literal_p1": "With the old, one is well held.",
+    "en_literal_p2": "",
+    "en_correct_p1": "With the old, one is well held.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Alles leeft, nëmmen de Fräsch deen hopst.",
+    "lu_part2": "",
+    "en_literal_p1": "Everything lives, only the frog jumps.",
+    "en_literal_p2": "",
+    "en_correct_p1": "Everything lives, only the frog jumps.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Den Alter geet vir (sot den Eilespill, dunn huet e seng Mamm d'Trap eragestouss).",
+    "lu_part2": "",
+    "en_literal_p1": "The old goes away (said the squirrel, then his mother pushed the door open).",
+    "en_literal_p2": "",
+    "en_correct_p1": "The old goes away (said the squirrel, then his mother pushed the door open).",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "An Amen a Jo war d'Affär gedoen (d'Affär war ganz séier gedoen).",
+    "lu_part2": "",
+    "en_literal_p1": "In Amen and Jo, the affair was done (the affair was done very quickly).",
+    "en_literal_p2": "",
+    "en_correct_p1": "In Amen and Jo, the affair was done (the affair was done very quickly).",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Sécher wéi den Amen am Gebiet.",
+    "lu_part2": "",
+    "en_literal_p1": "As sure as the Amen in the prayer.",
+    "en_literal_p2": "",
+    "en_correct_p1": "As sure as the Amen in the prayer.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Den Apel fält net wäit vum Bam, e misst just de Bierg erofrullen.",
+    "lu_part2": "",
+    "en_literal_p1": "The apple doesn't fall far from the tree, it just has to roll down the hill.",
+    "en_literal_p2": "",
+    "en_correct_p1": "The apple doesn't fall far from the tree, it just has to roll down the hill.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Et soll ee sech ëmmer een Apel fir den Duuscht versuergen.",
+    "lu_part2": "",
+    "en_literal_p1": "One should always save an apple for thirst.",
+    "en_literal_p2": "",
+    "en_correct_p1": "One should always save an apple for thirst.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Den Appetit kënnt iwwer dem Iessen.",
+    "lu_part2": "",
+    "en_literal_p1": "Appetite comes while eating.",
+    "en_literal_p2": "",
+    "en_correct_p1": "Appetite comes while eating.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "D'Ausriede si fir ze gebrauchen.",
+    "lu_part2": "",
+    "en_literal_p1": "The excuses are for use.",
+    "en_literal_p2": "",
+    "en_correct_p1": "The excuses are for use.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Bal ass nach keng Maus an der Fal.",
+    "lu_part2": "",
+    "en_literal_p1": "Soon, there is no mouse in the trap.",
+    "en_literal_p2": "",
+    "en_correct_p1": "Soon, there is no mouse in the trap.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Besser den Aascht fält wéi de Bam.",
+    "lu_part2": "",
+    "en_literal_p1": "Better the branch falls than the tree.",
+    "en_literal_p2": "",
+    "en_correct_p1": "Better the branch falls than the tree.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "En ale Bam verplanzt een net (en ale Mënsch soll een do liewe loossen, wou e gewinnt ass).",
+    "lu_part2": "",
+    "en_literal_p1": "An old tree is not transplanted (an old person should be left where they are).",
+    "en_literal_p2": "",
+    "en_correct_p1": "An old tree is not transplanted (an old person should be left where they are).",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Déi dommst Baueren hunn déi déckst Gromperen (och domm Leit kënne Chance hunn).",
+    "lu_part2": "",
+    "en_literal_p1": "The dumbest farmers have the thickest potatoes (dumb people can also have luck).",
+    "en_literal_p2": "",
+    "en_correct_p1": "The dumbest farmers have the thickest potatoes (dumb people can also have luck).",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Wat de Bauer net kennt, dat frësst en net.",
+    "lu_part2": "",
+    "en_literal_p1": "What the farmer doesn't know, he doesn't eat.",
+    "en_literal_p2": "",
+    "en_correct_p1": "What the farmer doesn't know, he doesn't eat.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "E Bauer, e Béier an e Stéier, dat sinn dräi ongemälleg Déier.",
+    "lu_part2": "",
+    "en_literal_p1": "A farmer, a Bavarian, and a Styrian, these are three incompatible animals.",
+    "en_literal_p2": "",
+    "en_correct_p1": "A farmer, a Bavarian, and a Styrian, these are three incompatible animals.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Et ass dofir gesuergt, datt d'Beem net an den Himmel wuessen.",
+    "lu_part2": "",
+    "en_literal_p1": "It is ensured that the trees do not grow into the sky.",
+    "en_literal_p2": "",
+    "en_correct_p1": "It is ensured that the trees do not grow into the sky.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Wat een net am Kapp huet, muss een an de Been hunn.",
+    "lu_part2": "",
+    "en_literal_p1": "What one doesn't have in the head, one must have in the legs.",
+    "en_literal_p2": "",
+    "en_correct_p1": "What one doesn't have in the head, one must have in the legs.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Wéi e beicht, sou gëtt ee lassgesprach.",
+    "lu_part2": "",
+    "en_literal_p1": "As one confesses, one is spoken to.",
+    "en_literal_p2": "",
+    "en_correct_p1": "As one confesses, one is spoken to.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Wéi een an de Bësch rifft, sou schaalt et erëm.",
+    "lu_part2": "",
+    "en_literal_p1": "As one calls into the forest, it echoes back.",
+    "en_literal_p2": "",
+    "en_correct_p1": "As one calls into the forest, it echoes back.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Dat bescht kënnt hannenno.",
+    "lu_part2": "",
+    "en_literal_p1": "The best comes from behind.",
+    "en_literal_p2": "",
+    "en_correct_p1": "The best comes from behind.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Besser ass besser, sot d'Fra, do huet se d'Ham an der Mëllech gekacht.",
+    "lu_part2": "",
+    "en_literal_p1": "Better is better, said the woman, then she bought the ham in the milk.",
+    "en_literal_p2": "",
+    "en_correct_p1": "Better is better, said the woman, then she bought the ham in the milk.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Besser eng Kuuscht an der Täsch, wéi eng Fieder um Hutt.",
+    "lu_part2": "",
+    "en_literal_p1": "Better a kiss in the pocket than a feather on the hat.",
+    "en_literal_p2": "",
+    "en_correct_p1": "Better a kiss in the pocket than a feather on the hat.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Besser spéit eppes, wéi fréi näischt.",
+    "lu_part2": "",
+    "en_literal_p1": "Better late something than early nothing.",
+    "en_literal_p2": "",
+    "en_correct_p1": "Better late something than early nothing.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Besser spéit, wéi guer net.",
+    "lu_part2": "",
+    "en_literal_p1": "Better late than never.",
+    "en_literal_p2": "",
+    "en_correct_p1": "Better late than never.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "D'Bestueden ass eng Lotterie.",
+    "lu_part2": "",
+    "en_literal_p1": "The burial is a lottery.",
+    "en_literal_p2": "",
+    "en_correct_p1": "The burial is a lottery.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Wéi ee säi Bett mécht, sou schléift een.",
+    "lu_part2": "",
+    "en_literal_p1": "As one makes their bed, they sleep.",
+    "en_literal_p2": "",
+    "en_correct_p1": "As one makes their bed, they sleep.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Et ass besser biedelen, wéi stielen.",
+    "lu_part2": "",
+    "en_literal_p1": "It is better to beg than to steal.",
+    "en_literal_p2": "",
+    "en_correct_p1": "It is better to beg than to steal.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Hanner dem Bierg sinn och Leit.",
+    "lu_part2": "",
+    "en_literal_p1": "Behind the mountain are also people.",
+    "en_literal_p2": "",
+    "en_correct_p1": "Behind the mountain are also people.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "En neie Biesem kiert besser.",
+    "lu_part2": "",
+    "en_literal_p1": "A new broom sweeps better.",
+    "en_literal_p2": "",
+    "en_correct_p1": "A new broom sweeps better.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Och eng blann Sau kann eng Eechel fannen.",
+    "lu_part2": "",
+    "en_literal_p1": "Even a blind sow can find an acorn.",
+    "en_literal_p2": "",
+    "en_correct_p1": "Even a blind sow can find an acorn.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Et ass nach laang net alles Gold, wat blénkt.",
+    "lu_part2": "",
+    "en_literal_p1": "Not everything that shines is gold.",
+    "en_literal_p2": "",
+    "en_correct_p1": "Not everything that shines is gold.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Et heescht keng Kou Blimmchen, dees se hief eng wäiss Strimmchen.",
+    "lu_part2": "",
+    "en_literal_p1": "There is no cow flower that doesn't have a white stripe.",
+    "en_literal_p2": "",
+    "en_correct_p1": "There is no cow flower that doesn't have a white stripe.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Mengen a Botter schäissen ass zweeërlee.",
+    "lu_part2": "",
+    "en_literal_p1": "Mixing and buttering are two different things.",
+    "en_literal_p2": "",
+    "en_correct_p1": "Mixing and buttering are two different things.",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Du bass net hei, fir brong ze ginn! (seet een zu engem, deen net effikass schafft).",
+    "lu_part2": "",
+    "en_literal_p1": "You are not here to be brought! (said to someone who doesn't work effectively).",
+    "en_literal_p2": "",
+    "en_correct_p1": "You are not here to be brought! (said to someone who doesn't work effectively).",
+    "en_correct_p2": ""
+  },
+  {
+    "lu_part1": "Deen nervt mech, ech kéint en ongespëtzt an de Buedem schloen! (deen nervt mech, ech géif en am léifste gutt zerschloen).",
+    "lu_part2": "",
+    "en_literal_p1": "He annoys me, I could beat him to a pulp! (he annoys me, I would gladly smash him).",
+    "en_literal_p2": "",
+    "en_correct_p1": "He annoys me, I could beat him to a pulp! (he annoys me, I would gladly smash him).",
+    "en_correct_p2": ""
+  }
+]

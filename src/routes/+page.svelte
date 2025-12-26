@@ -144,6 +144,13 @@
             </div>
 
             <button class="btn-back floating" on:click={closeGame}>✕</button>
+            <div class="mode-select-wrapper">
+                <select class="mode-select" bind:value={mode}>
+                    <option value="lu">🇱🇺 LU</option>
+                    <option value="literal">🌐 Literal</option>
+                    <option value="correct">🌐 Equivalent</option>
+                </select>
+            </div>
 
             <div class="scroll-wrapper" bind:this={container} on:scroll={handleScroll}>
                 {#each gameSet as saying, i}
@@ -197,6 +204,10 @@
     label { font-weight: 700; color: #444; display: block; margin-bottom: 0.5rem; }
     select { width: 100%; padding: 1rem; border-radius: 1rem; border: 2px solid #ddd; background: white; font-size: 1rem; }
 
+    :global(body.dark-mode) label {
+        color: #f8f9fa;
+    }
+
     :global(body.dark-mode) select {
         background: #3d4448;
         color: #f8f9fa;
@@ -248,14 +259,31 @@
         color: #f8f9fa;
     }
 
-    .btn-theme-toggle.floating {
+    .mode-select-wrapper {
         position: absolute;
         bottom: 2rem;
         left: 2rem;
-        background: #eee; border: none; width: 64px; height: 64px;
-        border-radius: 50%; font-size: 2rem; cursor: pointer; display: flex;
-        align-items: center; justify-content: center; color: #666;
         z-index: 100;
+    }
+
+    .mode-select {
+        padding: 0.5rem 1rem;
+        border-radius: 1rem;
+        border: 2px solid #ddd;
+        background: white;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+
+    :global(body.dark-mode) .mode-select {
+        background: #3d4448;
+        color: #f8f9fa;
+        border-color: #666;
+    }
+
+    :global(body.dark-mode) .mode-select option {
+        background: #3d4448;
+        color: #f8f9fa;
     }
 
     .theme-menu {
