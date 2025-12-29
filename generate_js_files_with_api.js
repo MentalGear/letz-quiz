@@ -84,8 +84,12 @@ async function callAI(prompt) {
 	throw lastError;
 }
 
+// Export functions for testing
+export const normalize = (str) =>
+	str.replace(/[,\.]/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
+
 // Function to process each .txt file and generate a .json file
-async function processFile(txtFilePath) {
+export async function processFile(txtFilePath) {
 	try {
 		const content = fs.readFileSync(txtFilePath, 'utf-8').trim();
 
@@ -100,9 +104,6 @@ async function processFile(txtFilePath) {
 		const combinedParts = translationData.lu_part1 + ' ' + translationData.lu_part2;
 		const normalizedExpected = content.replace(/\s+/g, ' ').trim();
 		const normalizedGot = combinedParts.replace(/\s+/g, ' ').trim();
-
-		// Allow minor differences like commas and periods
-		const normalize = (str) => str.replace(/[,\.]/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
 
 		if (normalize(normalizedExpected) !== normalize(normalizedGot)) {
 			console.warn(
@@ -134,11 +135,12 @@ async function processFile(txtFilePath) {
 		console.log(`Generated: ${jsonFilePath}`);
 	} catch (error) {
 		console.error(`Failed to process ${txtFilePath}: ${error.message}`);
+		throw error;
 	}
 }
 
 // Function to iterate over all .txt files in the datasets folder
-async function iterateAndGenerate(limit = null) {
+export async function iterateAndGenerate(limit = null) {
 	const datasetsDir = path.join(__dirname, 'src/lib/datasets');
 	const txtFiles = [];
 
@@ -173,9 +175,14 @@ async function iterateAndGenerate(limit = null) {
 	}
 }
 
-const args = process.argv.slice(2);
-const limit = args.length > 0 ? parseInt(args[0]) : null;
+// Entry point
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+	const args = process.argv.slice(2);
+	const limit = args.length > 0 ? parseInt(args[0]) : null;
 
-iterateAndGenerate(limit)
-	.then(() => console.log('Finished processing.'))
-	.catch(console.error);
+	iterateAndGenerate(limit)
+		.then(() => console.log('Finished processing.'))
+		.catch(console.error);
+}
+
+export { DataSchema, callAI };
