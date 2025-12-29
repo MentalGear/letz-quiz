@@ -1,7 +1,66 @@
 import { expect, test, describe, mock, beforeAll, afterAll } from 'bun:test';
 import fs from 'fs';
 import path from 'path';
-import { normalize, processFile, iterateAndGenerate } from './generate_js_files_with_api.js';
+import {
+	normalize,
+	processBatch,
+	iterateAndGenerate,
+	validateSaying
+} from './generate_js_files_with_api.js';
+
+describe('validateSaying', () => {
+	const content = 'Wan d’Aarbecht ee räich méich, da wier den Iesel méi räich wéi de Mëller.';
+
+	test('should return null for valid translation', () => {
+		const data = {
+			lu_part1: 'Wan d’Aarbecht ee räich méich,',
+			lu_part2: 'da wier den Iesel méi räich wéi de Mëller.',
+			en_literal_translation_p1: 'If work made one rich,',
+			en_literal_translation_p2: 'then the donkey would be richer than the miller.',
+			en_closest_real_corresponding_saying_p1: 'If hard work led to success,',
+			en_closest_real_corresponding_saying_p2: 'the donkey would own the farm.'
+		};
+		expect(validateSaying(data, content)).toBeNull();
+	});
+
+	test('should fail if lu_part1 + lu_part2 do not match content', () => {
+		const data = {
+			lu_part1: 'Mismatch',
+			lu_part2: 'Text',
+			en_literal_translation_p2: 'valid',
+			en_closest_real_corresponding_saying_p2: 'valid'
+		};
+		expect(validateSaying(data, content)).toBe('Combined parts do not match original text');
+	});
+
+	test('should fail if a p2 field is empty', () => {
+		const data = {
+			lu_part1: 'Wan d’Aarbecht ee räich méich,',
+			lu_part2: '',
+			en_literal_translation_p1: 'If work made one rich,',
+			en_literal_translation_p2: 'then the donkey would be richer than the miller.',
+			en_closest_real_corresponding_saying_p1: 'If hard work led to success,',
+			en_closest_real_corresponding_saying_p2: 'the donkey would own the farm.'
+		};
+		expect(validateSaying(data, content)).toBe(
+			'Field lu_part2 is empty - sayings must always be split in 2'
+		);
+	});
+
+	test('should fail if en_literal_translation_p2 is missing', () => {
+		const data = {
+			lu_part1: 'Wan d’Aarbecht ee räich méich,',
+			lu_part2: 'da wier den Iesel méi räich wéi de Mëller.',
+			en_literal_translation_p1: 'If work made one rich,',
+			en_literal_translation_p2: ' ',
+			en_closest_real_corresponding_saying_p1: 'If hard work led to success,',
+			en_closest_real_corresponding_saying_p2: 'the donkey would own the farm.'
+		};
+		expect(validateSaying(data, content)).toBe(
+			'Field en_literal_translation_p2 is empty - sayings must always be split in 2'
+		);
+	});
+});
 
 describe('normalize', () => {
 	test('should remove commas and periods', () => {
@@ -21,7 +80,7 @@ describe('normalize', () => {
 	});
 });
 
-describe('processFile', () => {
+describe('processBatch', () => {
 	const testDir = path.join(__dirname, 'test_temp');
 	const testTxt = path.join(testDir, 'test.txt');
 	const testJson = path.join(testDir, 'test.json');
@@ -37,19 +96,25 @@ describe('processFile', () => {
 		if (fs.existsSync(testDir)) fs.rmdirSync(testDir);
 	});
 
-	test('should process file correctly when AI returns matching parts', async () => {
+	test('should process batch correctly when AI returns matching parts', async () => {
 		// Mock the ai package's generateText
 		mock.module('ai', () => ({
 			generateText: async () => ({
 				output: {
-					lu_part1: "D'Aen op oder",
-					lu_part2: 'de Beidel.',
-					en_literal_p1: 'Eyes up or',
-					en_literal_p2: 'the bag.',
-					en_correct_p1: 'Pay attention',
-					en_correct_p2: 'or pay the price.',
-					culturalPopularity: 4,
-					wordsDifficulty: 3
+					sayings: [
+						{
+							original_lu: "D'Aen op oder de Beidel.",
+							lu_part1: "D'Aen op oder",
+							lu_part2: 'de Beidel.',
+							en_literal_translation_p1: 'Eyes up or',
+							en_literal_translation_p2: 'the bag.',
+							en_closest_real_corresponding_saying_p1: 'Pay attention',
+							en_closest_real_corresponding_saying_p2: 'or pay the price.',
+							culturalPopularity: 4,
+							wordsDifficulty: 3,
+							vulgarity: 1
+						}
+					]
 				}
 			}),
 			Output: {
@@ -65,7 +130,7 @@ describe('processFile', () => {
 			createGoogleGenerativeAI: () => () => ({ modelId: 'google' })
 		}));
 
-		await processFile(testTxt);
+		await processBatch([testTxt]);
 
 		expect(fs.existsSync(testJson)).toBe(true);
 		const result = JSON.parse(fs.readFileSync(testJson, 'utf-8'));
@@ -86,9 +151,7 @@ describe('File Discovery', () => {
 		fs.writeFileSync(path.join(subDirB, 'B_1.txt'), 'B1');
 		fs.writeFileSync(path.join(subDirA, 'A_1.txt'), 'A1');
 
-		// We can't easily test iterateAndGenerate without mocking its internal readFiles or fs.readdirSync
-		// because it expects a specific path.
-		// But we can verify the sorting logic works as intended.
+		// Sorting logic verification
 		const files = ['path/to/B/B_1.txt', 'path/to/A/A_1.txt'];
 		files.sort();
 		expect(files[0]).toBe('path/to/A/A_1.txt');
