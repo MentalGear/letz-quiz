@@ -1,10 +1,10 @@
 {
-  "lu_part1": "Zäit",
-  "lu_part2": "ass Geld.",
-  "en_literal_translation_p1": "Time",
-  "en_literal_translation_p2": "is money.",
-  "en_closest_real_corresponding_saying_p1": "Time",
-  "en_closest_real_corresponding_saying_p2": "is money.",
+  "lu_part1": "Zäit ass",
+  "lu_part2": "Geld.",
+  "en_literal_translation_p1": "Time is",
+  "en_literal_translation_p2": "money.",
+  "en_closest_real_corresponding_saying_p1": "Time is",
+  "en_closest_real_corresponding_saying_p2": "money.",
   "culturalPopularity": 5,
   "wordsDifficulty": 1,
   "vulgarity": 1

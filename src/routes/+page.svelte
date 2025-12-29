@@ -1,5 +1,6 @@
-<script>
+<script lang="ts">
 	import sayingsData from '$lib/dataset.json';
+	import { fade, scale } from 'svelte/transition';
 	import GameCard from '$lib/components/GameCard.svelte';
 	import {
 		themeMode,
@@ -13,20 +14,22 @@
 		initializeExplicitness
 	} from '$lib/stores';
 
-	let state = 'settings';
-	let rounds = 15;
-	let mode = 'lu';
-	let gameSet = [];
-	let container;
-	let currentIndex = 0;
-	let showConfirm = false;
-	let popularityMin = 1;
-	let popularityMax = 5;
-	let difficulty = 'medium';
+	type QuizState = 'settings' | 'playing' | 'finished';
+	let state = $state<QuizState>('settings');
+	let rounds = $state(15);
+	let mode = $state('lu');
+	let gameSet = $state<any[]>([]);
+	let container: HTMLElement | undefined = $state();
+	let currentIndex = $state(0);
+	let showConfirm = $state(false);
+	let showOverlay = $state(false);
+	let popularityMin = $state(1);
+	let popularityMax = $state(5);
+	let difficulty = $state('medium');
 	import PlayerModal from '$lib/components/PlayerModal.svelte';
 
-	let playerModal;
-	let players = [];
+	let playerModal: any = $state();
+	let players = $state<string[]>([]);
 
 	// Initialize theme and player scores
 	initializeTheme();
@@ -64,12 +67,14 @@
 		} else if (currentIndex < gameSet.length - 1) {
 			// Scroll to next card
 			currentIndex++;
-			container.scrollTo({
-				left: currentIndex * container.clientWidth,
-				behavior: 'smooth'
-			});
+			if (container) {
+				container.scrollTo({
+					left: currentIndex * container.clientWidth,
+					behavior: 'smooth'
+				});
+			}
 		} else {
-			state = 'settings';
+			state = 'finished';
 		}
 	}
 
@@ -94,12 +99,37 @@
 		showConfirm = false;
 	}
 
-	function setTheme(newMode) {
+	function setTheme(newMode: string) {
 		themeMode.set(newMode);
 	}
 
+	function toggleOverlay() {
+		showOverlay = !showOverlay;
+	}
+
+	function reportIssue() {
+		const subject = encodeURIComponent('Lux Quiz Issue Report');
+		const body = encodeURIComponent('Please describe the issue you encountered...');
+		window.location.href = `mailto:support@example.com?subject=${subject}&body=${body}`;
+	}
+
+	function quitGame() {
+		showOverlay = false;
+		closeGame();
+	}
+
 	// Calculate progress for the top bar
-	$: progress = gameSet.length > 0 ? ((currentIndex + 1) / gameSet.length) * 100 : 0;
+	const progress = $derived(gameSet.length > 0 ? ((currentIndex + 1) / gameSet.length) * 100 : 0);
+	const currentScores = $derived($currentCardScores as Record<number, Record<string, boolean>>);
+	const actionType = $derived(
+		gameSet[currentIndex]
+			? gameSet[currentIndex].isRevealed
+				? currentIndex < gameSet.length - 1
+					? 'next'
+					: 'finish'
+				: 'reveal'
+			: 'reveal'
+	);
 </script>
 
 <main>
@@ -160,17 +190,6 @@
 				<!-- <span>Min: {popularityMin}, Max: {popularityMax}</span> -->
 			</div>
 
-			<div class="control">
-				<label>Explicitness (Max: {$explicitness})</label>
-				<select bind:value={$explicitness}>
-					{#each [1, 2, 3, 4, 5] as num}
-						<option value={num}
-							>{num} {num === 1 ? '(Clean)' : num === 5 ? '(Explicit)' : ''}</option
-						>
-					{/each}
-				</select>
-			</div>
-
 			<!-- <div class="control">
                 <label>Difficulty</label>
                 <select bind:value={difficulty}>
@@ -185,42 +204,94 @@
 				on:click={() => {
 					const savedPlayers = localStorage.getItem('players');
 					players = savedPlayers
-						? JSON.parse(savedPlayers).filter((player) => player.trim().length > 0)
+						? (JSON.parse(savedPlayers) as string[]).filter(
+								(player: string) => player.trim().length > 0
+							)
 						: [];
 					resetPlayerScores();
 					startGame();
 				}}>Start Game</button
 			>
-			<divider class="divider"> – or – </divider>
+
+			<!-- Deactivate Scores per Player for now -->
+			<!-- <divider class="divider"> – or – </divider>
 			<button class="btn-secondary" on:click={() => playerModal.openModal()}
 				>Players ({$playerCount})</button
-			>
-			<PlayerModal bind:this={playerModal} />
+			> -->
 
-			<div class="control" style="margin-top: 50px; opacity: 0.5">
-				<label>Theme</label>
-				<select bind:value={$themeMode} on:change={() => setTheme($themeMode)}>
-					<option value="light">Light Mode</option>
-					<option value="dark">Dark Mode</option>
-					<option value="device">Device Settings</option>
-				</select>
+			<!-- <PlayerModal bind:this={playerModal} /> -->
+
+			<div class="control" style="display: flex; gap: 10px; margin-top: 50px; opacity: 0.5">
+				<div class="control">
+					<!-- <label>Allow Explicitness (Max: {$explicitness})</label> -->
+					<!-- // make a switch/checkbox -->
+					<label>Allow Explicitness</label>
+					<div style="display: flex; gap: 10px">
+						<input
+							type="checkbox"
+							id="explicitnessControl"
+							checked={$explicitness > 3}
+							on:change={() => explicitness.set($explicitness > 3 ? 3 : 5)}
+						/>
+						<label for="explicitnessControl">On</label>
+					</div>
+					<!-- <select bind:value={$explicitness}>
+						{#each [1, 2, 3, 4, 5] as num}
+							<option value={num}
+								>{num} {num === 1 ? '(Clean)' : num === 5 ? '(Explicit)' : ''}</option
+							>
+						{/each}
+					</select> -->
+				</div>
+
+				<div class="control">
+					<label>Theme</label>
+					<select bind:value={$themeMode} on:change={() => setTheme($themeMode)}>
+						<option value="light">Light Mode</option>
+						<option value="dark">Dark Mode</option>
+						<option value="device">Device Settings</option>
+					</select>
+				</div>
 			</div>
 		</div>
-	{:else}
+	{:else if state === 'playing'}
 		<div class="screen game">
 			<div class="progress-bar-container">
 				<div class="progress-bar" style="width: {progress}%" />
 			</div>
 
-			<button class="btn-back floating" on:click={closeGame}>✕</button>
-			<div class="mode-select-wrapper">
-				<select class="mode-select" bind:value={mode}>
-					<option value="lu">🇱🇺 LU</option>
-					<option value="literal">🌐 Literal</option>
-					<option value="correct">🌐 Equivalent</option>
-					<!-- <option value="en_to_lu">🌐→🇱🇺</option> -->
-				</select>
-			</div>
+			<button class="menu-btn floating" on:click={toggleOverlay}>
+				<span class="menu-icon">☰</span>
+			</button>
+
+			{#if showOverlay}
+				<div class="menu-overlay" on:click|self={toggleOverlay} transition:fade={{ duration: 200 }}>
+					<div class="menu-content" transition:scale={{ duration: 300, start: 0.95, opacity: 0 }}>
+						<h2 class="menu-title">Menu</h2>
+						<div class="menu-items">
+							<button class="menu-item" on:click={toggleOverlay}>
+								<!-- <span class="icon">▶</span> -->
+								Resume
+							</button>
+							<div class="menu-item mode-item">
+								<!-- <span class="icon">🇱🇺</span> -->
+								<select class="overlay-mode-select" bind:value={mode}>
+									<option value="lu">Luxembourgish Only</option>
+									<option value="literal">LU + English Literal</option>
+									<option value="correct">LU + English Equivalent</option>
+								</select>
+							</div>
+							<button class="menu-item" on:click={reportIssue}>
+								<!-- <span class="icon">⚠️</span> -->
+								Report Issue
+							</button>
+							<button class="menu-item quit" on:click={quitGame}>
+								<span class="icon">✕</span> Quit Game
+							</button>
+						</div>
+					</div>
+				</div>
+			{/if}
 
 			<div class="scroll-wrapper" bind:this={container} on:scroll={handleScroll}>
 				{#each gameSet as saying, i}
@@ -231,25 +302,29 @@
 								<div class="player-scores">
 									{#each players as player, index}
 										<button
-											class="score-button {$currentCardScores[i] && $currentCardScores[i][player]
+											class="score-button {currentScores[currentIndex] &&
+											currentScores[currentIndex][player]
 												? 'active'
 												: ''}"
 											on:click={() => {
-												if ($currentCardScores[i] && $currentCardScores[i][player]) {
+												if (currentScores[currentIndex] && currentScores[currentIndex][player]) {
 													currentCardScores.update((scores) => {
-														delete scores[i][player];
+														delete (scores as Record<number, Record<string, boolean>>)[
+															currentIndex
+														][player];
 														return scores;
 													});
 												} else {
 													currentCardScores.update((scores) => {
-														if (!scores[i]) scores[i] = {};
-														scores[i][player] = true;
+														const typedScores = scores as Record<number, Record<string, boolean>>;
+														if (!typedScores[currentIndex]) typedScores[currentIndex] = {};
+														typedScores[currentIndex][player] = true;
 														return scores;
 													});
 												}
 											}}
 										>
-											{player} ({Object.keys($currentCardScores[i] || {}).length})
+											{player} ({Object.keys(currentScores[currentIndex] || {}).length})
 										</button>
 									{/each}
 								</div>
@@ -259,26 +334,54 @@
 				{/each}
 			</div>
 
-			{#if gameSet[currentIndex].isRevealed && currentIndex < gameSet.length - 1}
-				<button class="btn-action floating-next" on:click={handleAction}>Next →</button>
-			{:else if gameSet[currentIndex].isRevealed && currentIndex === gameSet.length - 1}
-				<button class="btn-action floating-next" on:click={handleAction}>Finish</button>
-			{:else}
-				<button class="btn-action floating-reveal" on:click={handleAction}>Reveal</button>
-			{/if}
-		</div>
-
-		{#if showConfirm}
-			<div class="confirm-overlay">
-				<div class="confirm-dialog">
-					<p>Are you sure you want to quit? Your progress will be lost.</p>
-					<div class="confirm-buttons">
-						<button class="btn-cancel" on:click={cancelClose}>Cancel</button>
-						<button class="btn-confirm" on:click={confirmClose}>Quit</button>
+			<div class="actions-container">
+				{#each [actionType] as type (type)}
+					<div
+						class="button-transition-wrapper"
+						transition:fade={{ duration: 250 }}
+						style="grid-area: 1 / 1;"
+					>
+						{#if type === 'next'}
+							<button class="btn-action floating-next" on:click={handleAction}>Next →</button>
+						{:else if type === 'finish'}
+							<button class="btn-action floating-next" on:click={handleAction}>Finish</button>
+						{:else}
+							<button class="btn-action floating-reveal" on:click={handleAction}>Reveal</button>
+						{/if}
 					</div>
+				{/each}
+			</div>
+		</div>
+	{:else if state === 'finished'}
+		<div class="screen finished" in:fade>
+			<div class="finished-content">
+				<h1 class="finished-title">Game Finished!</h1>
+				<p class="finished-stats">You've completed all {rounds} cards.</p>
+				<div class="finished-actions">
+					<button
+						class="btn-primary"
+						on:click={() => {
+							resetPlayerScores();
+							startGame();
+						}}>Play Again</button
+					>
+					<button class="btn-secondary" on:click={() => (state = 'settings')}
+						>Back to Settings</button
+					>
 				</div>
 			</div>
-		{/if}
+		</div>
+	{/if}
+	{#if showConfirm}
+		<div class="confirm-overlay">
+			<div class="confirm-dialog">
+				<p>Are you sure you want to quit? Your progress will be lost.</p>
+				<div class="confirm-buttons">
+					<button class="btn-cancel" on:click={cancelClose}>Cancel</button>
+					<button class="btn-confirm" on:click={confirmClose}>Quit</button>
+				</div>
+			</div>
+		</div>
 	{/if}
 </main>
 
@@ -316,7 +419,8 @@
 		height: 100svh;
 		display: flex;
 		flex-direction: column;
-		padding: 2rem;
+		/* padding: 2rem; */
+		/* max-width: 700px; */
 		box-sizing: border-box;
 		position: relative;
 	}
@@ -388,16 +492,18 @@
 	.progress-bar-container {
 		width: 100%;
 		height: 10px;
-		background-color: #eee;
-		border-radius: 5px;
-		margin-bottom: 1rem;
+		background-color: #eeeeee05;
+		position: fixed;
+		bottom: 0;
+		/* border-radius: 5px; */
+		/* margin-bottom: 1rem; */
 	}
 
 	.progress-bar {
 		height: 100%;
 		background-color: #00a3e0;
-		border-radius: 5px;
-		transition: width 0.3s ease;
+		/* border-radius: 5px; */
+		transition: width 0.3s ease-in;
 	}
 
 	.scroll-wrapper {
@@ -418,54 +524,178 @@
 		justify-content: center;
 	}
 
-	.btn-back.floating {
+	.menu-btn.floating {
 		position: absolute;
 		top: 1rem;
 		left: 1rem;
-		background: #eee;
+		background: rgba(238, 238, 238, 0.8);
+		backdrop-filter: blur(10px);
 		border: none;
-		width: 64px;
-		height: 64px;
+		width: 48px;
+		height: 48px;
 		border-radius: 50%;
-		font-size: 2rem;
 		cursor: pointer;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		color: #666;
 		z-index: 100;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+		transition: all 0.2s ease;
 	}
 
-	:global(body.dark-mode) .btn-back.floating {
-		background: #444;
+	.menu-btn.floating:active {
+		transform: scale(0.95);
+	}
+
+	.menu-icon {
+		font-size: 1.5rem;
+		line-height: 1;
+		margin-bottom: 4px;
+		opacity: 0.5;
+	}
+
+	:global(body.dark-mode) .menu-btn.floating {
+		background: rgba(68, 68, 68, 0.8);
 		color: #f8f9fa;
 	}
 
-	.mode-select-wrapper {
-		position: absolute;
-		bottom: 2rem;
-		left: 2rem;
-		z-index: 100;
+	.menu-overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, 0.4);
+		backdrop-filter: blur(15px);
+		z-index: 200;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		/* animation: fadeIn 0.3s ease-out; */ /* Removed as Svelte transition will handle this */
 	}
 
-	.mode-select {
-		padding: 0.5rem 1rem;
-		border-radius: 1rem;
-		border: 2px solid #ddd;
+	/* @keyframes fadeIn {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	} */
+
+	.menu-content {
 		background: white;
-		font-size: 1rem;
+		width: 90%;
+		max-width: 320px;
+		border-radius: 2rem;
+		padding: 2rem;
+		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+		/* transform: translateY(0); */ /* Removed as Svelte transition will handle this */
+		/* animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1); */ /* Removed as Svelte transition will handle this */
+	}
+
+	:global(body.dark-mode) .menu-content {
+		background: #2d3436;
+		color: #f8f9fa;
+	}
+
+	/* @keyframes slideUp {
+		from {
+			transform: translateY(20px);
+			opacity: 0;
+		}
+		to {
+			transform: translateY(0);
+			opacity: 1;
+		}
+	} */
+
+	.menu-title {
+		margin-top: 0;
+		text-align: center;
+		color: #00a3e0;
+		text-transform: uppercase;
+		letter-spacing: 2px;
+		font-size: 1.2rem;
+		margin-bottom: 2rem;
+	}
+
+	.menu-items {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.menu-item {
+		background: #f1f3f5;
+		border: none;
+		padding: 1.25rem;
+		border-radius: 1rem;
+		font-size: 1.1rem;
+		font-weight: 600;
+		color: #444;
 		cursor: pointer;
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		transition: all 0.2s ease;
+		text-align: left;
+		width: 100%;
 	}
 
-	:global(body.dark-mode) .mode-select {
+	:global(body.dark-mode) .menu-item {
 		background: #3d4448;
 		color: #f8f9fa;
-		border-color: #666;
 	}
 
-	:global(body.dark-mode) .mode-select option {
-		background: #3d4448;
-		color: #f8f9fa;
+	.menu-item:hover {
+		background: #e9ecef;
+	}
+
+	:global(body.dark-mode) .menu-item:hover {
+		background: #4a5459;
+	}
+
+	.menu-item:active {
+		transform: scale(0.98);
+	}
+
+	.menu-item.quit {
+		color: #ef3340;
+		margin-top: 1rem;
+	}
+
+	.menu-item.mode-item {
+		padding: 0;
+		overflow: hidden;
+		position: relative;
+	}
+
+	.menu-item.mode-item .icon {
+		position: absolute;
+		/* left: 1.25rem; */
+		pointer-events: none;
+	}
+
+	.overlay-mode-select {
+		width: 100%;
+		height: 100%;
+		/* padding: 1.25rem 1.25rem 1.25rem 3.5rem; */
+		padding-left: 1.25rem;
+		background: transparent;
+		border: none;
+		font-size: 1.2rem;
+		font-weight: 600;
+		color: inherit;
+		cursor: pointer;
+		appearance: none;
+	}
+
+	.menu-item .icon {
+		font-size: 1.2rem;
+		width: 24px;
+		text-align: center;
 	}
 
 	.theme-menu {
@@ -497,34 +727,56 @@
 		background: #f0f0f0;
 	}
 
-	.btn-action.floating-reveal {
-		position: absolute;
-		bottom: 2rem;
-		right: 2rem;
-		background: #00a3e0;
-		color: white;
-		border: none;
-		padding: 1rem 2rem;
-		border-radius: 100px;
-		font-weight: bold;
-		font-size: 1.2rem;
-		cursor: pointer;
+	.actions-container {
+		position: fixed;
+		bottom: 3svh;
+		left: 50%;
+		transform: translateX(-50%);
+		display: grid;
+		place-items: center;
 		z-index: 100;
 	}
 
-	.btn-action.floating-next {
-		position: absolute;
-		bottom: 2rem;
-		right: 2rem;
-		background: #ef3340;
+	.btn-action.floating-reveal {
+		grid-area: 1 / 1;
+		background: #00a3e0;
 		color: white;
 		border: none;
-		padding: 1rem 2rem;
+		padding: 1rem 0;
+		width: 180px;
+		text-align: center;
 		border-radius: 100px;
 		font-weight: bold;
 		font-size: 1.2rem;
 		cursor: pointer;
-		z-index: 100;
+		white-space: nowrap;
+		box-shadow: 0 4px 15px rgba(0, 163, 224, 0.3);
+		transition:
+			transform 0.15s ease,
+			box-shadow 0.15s ease;
+	}
+
+	.btn-action.floating-next {
+		grid-area: 1 / 1;
+		background: #ef3340;
+		color: white;
+		border: none;
+		padding: 1rem 0;
+		width: 180px;
+		text-align: center;
+		border-radius: 100px;
+		font-weight: bold;
+		font-size: 1.2rem;
+		cursor: pointer;
+		white-space: nowrap;
+		box-shadow: 0 4px 15px rgba(239, 51, 64, 0.3);
+		transition:
+			transform 0.15s ease,
+			box-shadow 0.15s ease;
+	}
+
+	.btn-action:active {
+		transform: scale(0.95);
 	}
 
 	.confirm-overlay {
@@ -569,6 +821,42 @@
 		font-weight: bold;
 		font-size: 1.2rem;
 		cursor: pointer;
+	}
+
+	.finished {
+		justify-content: center;
+		align-items: center;
+		background: white;
+		text-align: center;
+	}
+
+	:global(body.dark-mode) .finished {
+		background: #2d3436;
+		color: #f8f9fa;
+	}
+
+	.finished-content {
+		max-width: 400px;
+		width: 90%;
+		padding: 2rem;
+	}
+
+	.finished-title {
+		font-size: 3rem;
+		color: #00a3e0;
+		margin-bottom: 1rem;
+	}
+
+	.finished-stats {
+		font-size: 1.2rem;
+		opacity: 0.8;
+		margin-bottom: 3rem;
+	}
+
+	.finished-actions {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
 	}
 
 	.btn-confirm {

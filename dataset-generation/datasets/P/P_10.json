@@ -1,11 +1,11 @@
 {
-  "lu_part1": "Probéieren geet",
-  "lu_part2": "iwwer studéieren.",
-  "en_literal_translation_p1": "Trying goes",
-  "en_literal_translation_p2": "above studying.",
-  "en_closest_real_corresponding_saying_p1": "Actions speak louder",
-  "en_closest_real_corresponding_saying_p2": "than words.",
-  "culturalPopularity": 5,
+  "lu_part1": "Probéieren geet iwwer,",
+  "lu_part2": "studéieren.",
+  "en_literal_translation_p1": "Trying goes beyond,",
+  "en_literal_translation_p2": "studying.",
+  "en_closest_real_corresponding_saying_p1": "Actions speak louder than,",
+  "en_closest_real_corresponding_saying_p2": "words (or theories).",
+  "culturalPopularity": 4,
   "wordsDifficulty": 2,
   "vulgarity": 1
 }

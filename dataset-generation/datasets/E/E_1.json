@@ -1,11 +1,11 @@
 {
   "lu_part1": "Et reent",
   "lu_part2": "ewéi mat Eemeren.",
-  "en_literal_translation_p1": "It’s raining",
-  "en_literal_translation_p2": "as if with buckets.",
-  "en_closest_real_corresponding_saying_p1": "It’s raining cats and dogs,",
-  "en_closest_real_corresponding_saying_p2": "or pouring buckets.",
-  "culturalPopularity": 4,
+  "en_literal_translation_p1": "It's raining",
+  "en_literal_translation_p2": "like with buckets.",
+  "en_closest_real_corresponding_saying_p1": "It's raining cats and dogs,",
+  "en_closest_real_corresponding_saying_p2": "as they say.",
+  "culturalPopularity": 5,
   "wordsDifficulty": 2,
   "vulgarity": 1
 }

@@ -1,7 +1,7 @@
-<script>
-	export let saying;
-	export let mode;
-	export let revealed = false;
+<script lang="ts">
+	export let saying: any;
+	export let mode: string;
+	export let revealed: boolean = false;
 
 	// Determine which English parts to show
 	$: en_p1 =
@@ -22,6 +22,22 @@
 
 	$: luWords = saying.lu_part2.split(' ');
 	$: enWords = en_p2.split(' ');
+	import { slide, fade } from 'svelte/transition';
+	import { cubicOut } from 'svelte/easing';
+
+	// Custom transition for word reveal with deblur effect
+	function wordReveal(node: HTMLElement, { delay = 0, duration = 800 }) {
+		return {
+			delay,
+			duration,
+			easing: cubicOut,
+			css: (t: number, u: number) => `
+				opacity: ${t};
+				filter: blur(${u * 20}px);
+				transform: translateY(${u * 12}px);
+			`
+		};
+	}
 </script>
 
 <div class="card">
@@ -29,13 +45,15 @@
 		{#if showEnglish}
 			<div class="text-block en">
 				<span class="part1">{en_p1}</span>
-				<div class="part2">
-					{#each enWords as word, i}
-						<span class="word" class:revealed style="transition-delay: {revealed ? i * 100 : 0}ms">
-							{word}
-						</span>
-					{/each}
-				</div>
+				{#if revealed}
+					<div class="part2" transition:slide={{ duration: 500, easing: cubicOut }}>
+						{#each enWords as word, i}
+							<span class="word" in:wordReveal={{ delay: 550 + i * 80, duration: 700 }}>
+								{word}
+							</span>
+						{/each}
+					</div>
+				{/if}
 			</div>
 
 			{#if revealed}
@@ -43,29 +61,29 @@
 
 				<div class="text-block lu">
 					<span class="part1">{saying.lu_part1}</span>
-					<div class="part2">
-						{#each luWords as word, i}
-							<span
-								class="word"
-								class:revealed
-								style="transition-delay: {revealed ? (enWords.length + i) * 100 : 0}ms"
-							>
-								{word}
-							</span>
-						{/each}
-					</div>
+					{#if revealed}
+						<div class="part2" transition:slide={{ duration: 500, easing: cubicOut }}>
+							{#each luWords as word, i}
+								<span class="word" in:wordReveal={{ delay: 550 + i * 80, duration: 700 }}>
+									{word}
+								</span>
+							{/each}
+						</div>
+					{/if}
 				</div>
 			{/if}
 		{:else}
 			<div class="text-block lu">
 				<span class="part1">{saying.lu_part1}</span>
-				<div class="part2">
-					{#each luWords as word, i}
-						<span class="word" class:revealed style="transition-delay: {revealed ? i * 100 : 0}ms">
-							{word}
-						</span>
-					{/each}
-				</div>
+				{#if revealed}
+					<div class="part2" transition:slide={{ duration: 500, easing: cubicOut }}>
+						{#each luWords as word, i}
+							<span class="word" in:wordReveal={{ delay: 550 + i * 80, duration: 700 }}>
+								{word}
+							</span>
+						{/each}
+					</div>
+				{/if}
 			</div>
 
 			{#if mode !== 'lu'}
@@ -73,17 +91,21 @@
 
 				<div class="text-block en">
 					<span class="part1">{en_p1}</span>
-					<div class="part2">
-						{#each enWords as word, i}
-							<span
-								class="word"
-								class:revealed
-								style="transition-delay: {revealed ? (luWords.length + i) * 100 : 0}ms"
-							>
-								{word}
-							</span>
-						{/each}
-					</div>
+					{#if revealed}
+						<div class="part2" transition:slide={{ duration: 500, easing: cubicOut }}>
+							{#each enWords as word, i}
+								<span
+									class="word"
+									in:wordReveal={{
+										delay: 550 + luWords.length * 80 + i * 80,
+										duration: 700
+									}}
+								>
+									{word}
+								</span>
+							{/each}
+						</div>
+					{/if}
 				</div>
 			{/if}
 		{/if}
@@ -92,7 +114,7 @@
 
 <style>
 	.card {
-		width: 85svw;
+		width: 60svw;
 		max-width: 500px;
 		height: 60svh;
 		background: white;
@@ -156,17 +178,13 @@
 
 	.word {
 		display: inline-block;
-		opacity: 0;
-		filter: blur(12px);
-		transform: translateY(10px);
-		transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-		margin-right: 0.3rem;
+		margin-right: 0.35rem;
 	}
 
-	.word.revealed {
-		opacity: 1;
-		filter: blur(0px);
-		transform: translateY(0);
+	.word-hidden {
+		opacity: 0;
+		filter: blur(16px);
+		transform: translateY(8px);
 	}
 
 	.player-scores-container {

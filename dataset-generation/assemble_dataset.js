@@ -16,6 +16,7 @@ function collectJsonFiles(dir, fileList = []) {
 		if (fs.statSync(filePath).isDirectory()) {
 			collectJsonFiles(filePath, fileList);
 		} else if (path.extname(file) === '.json' && !file.endsWith('-error.json')) {
+			// only use none error files
 			fileList.push(filePath);
 		}
 	});

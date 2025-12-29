@@ -1,0 +1,18 @@
+{
+  "file": "/Users/Tom/projects/lux-quiz/dataset-generation/datasets/K/K_17.txt",
+  "error": "Combined parts do not match original text",
+  "expected": "Et ass net alles riicht wat bei de Keeser geet. Ext:, well seng Fra war kromm.",
+  "got": "Et ass net alles riicht wat bei de Keeser geet, | well seng Fra war kromm.",
+  "fullData": {
+    "original_lu": "Et ass net alles riicht wat bei de Keeser geet. Ext:, well seng Fra war kromm.",
+    "lu_part1": "Et ass net alles riicht wat bei de Keeser geet,",
+    "lu_part2": "well seng Fra war kromm.",
+    "en_literal_translation_p1": "Not everything is right that goes on at the emperor's place,",
+    "en_literal_translation_p2": "because his wife was crooked.",
+    "en_closest_real_corresponding_saying_p1": "Not all that glitters is gold,",
+    "en_closest_real_corresponding_saying_p2": "especially if the queen is bent out of shape.",
+    "culturalPopularity": 3,
+    "wordsDifficulty": 3,
+    "vulgarity": 1
+  }
+}

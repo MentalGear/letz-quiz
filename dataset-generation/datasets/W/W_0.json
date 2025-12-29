@@ -1,11 +1,11 @@
 {
   "lu_part1": "Deen ass mat all Waasser gewäsch,",
   "lu_part2": "just net mat Wäiwaasser.",
-  "en_literal_translation_p1": "That one is washed with all waters,",
+  "en_literal_translation_p1": "He is washed with all waters,",
   "en_literal_translation_p2": "just not with holy water.",
-  "en_closest_real_corresponding_saying_p1": "He’s been around the block,",
+  "en_closest_real_corresponding_saying_p1": "He’s seen it all and done it all,",
   "en_closest_real_corresponding_saying_p2": "but he’s no saint.",
   "culturalPopularity": 3,
   "wordsDifficulty": 4,
-  "vulgarity": 2
+  "vulgarity": 1
 }

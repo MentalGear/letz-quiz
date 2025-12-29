@@ -1,11 +1,11 @@
 {
-  "lu_part1": "Hie läit",
-  "lu_part2": "nach am Jelli.",
+  "lu_part1": "Hie läit nach",
+  "lu_part2": "am Jelli.",
   "en_literal_translation_p1": "He is still",
-  "en_literal_translation_p2": "in the jelly.",
-  "en_closest_real_corresponding_saying_p1": "He's still wet behind the ears,",
-  "en_closest_real_corresponding_saying_p2": "not yet fully formed or experienced.",
+  "en_literal_translation_p2": "in diapers.",
+  "en_closest_real_corresponding_saying_p1": "He is still",
+  "en_closest_real_corresponding_saying_p2": "wet behind the ears.",
   "culturalPopularity": 3,
-  "wordsDifficulty": 3,
+  "wordsDifficulty": 2,
   "vulgarity": 1
 }

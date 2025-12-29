@@ -1,11 +1,11 @@
 {
   "lu_part1": "Quetschen",
   "lu_part2": "och.",
-  "en_literal_translation_p1": "Complain",
-  "en_literal_translation_p2": "as well.",
-  "en_closest_real_corresponding_saying_p1": "Might as well",
-  "en_closest_real_corresponding_saying_p2": "join the club.",
-  "culturalPopularity": 2,
+  "en_literal_translation_p1": "Complaining",
+  "en_literal_translation_p2": "too.",
+  "en_closest_real_corresponding_saying_p1": "Everyone has something to gripe about,",
+  "en_closest_real_corresponding_saying_p2": "so don't think you're alone.",
+  "culturalPopularity": 3,
   "wordsDifficulty": 2,
   "vulgarity": 1
 }

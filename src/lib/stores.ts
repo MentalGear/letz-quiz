@@ -1,14 +1,10 @@
-import { writable } from 'svelte/store';
+import { writable, type Writable } from 'svelte/store';
 
-export const themeMode = writable('device');
-export const playerCount = writable(0);
-export const playerScores = writable({});
-export const currentCardScores = writable({});
-export const explicitness = writable(1);
-
-// @ts-ignore
-
-// @ts-ignore
+export const themeMode: Writable<string> = writable('device');
+export const playerCount: Writable<number> = writable(0);
+export const playerScores: Writable<Record<string, number>> = writable({});
+export const currentCardScores: Writable<Record<number, Record<string, boolean>>> = writable({});
+export const explicitness: Writable<number> = writable(1);
 
 export function initializeTheme() {
 	if (typeof window !== 'undefined') {
@@ -30,6 +26,7 @@ export function initializeTheme() {
 					document.body.classList.add('light-mode');
 				}
 			}
+			localStorage.setItem('themeMode', value);
 		});
 	}
 }
@@ -39,9 +36,10 @@ export function initializePlayerCount() {
 		const savedPlayers = localStorage.getItem('players');
 		if (savedPlayers) {
 			const players = JSON.parse(savedPlayers);
-			// @ts-ignore
-			const filteredPlayers = players.filter((player) => player.trim().length > 0);
-			playerCount.set(filteredPlayers.length);
+			if (Array.isArray(players)) {
+				const filteredPlayers = players.filter((player: string) => player.trim().length > 0);
+				playerCount.set(filteredPlayers.length);
+			}
 		}
 	}
 }
@@ -50,7 +48,11 @@ export function initializePlayerScores() {
 	if (typeof window !== 'undefined') {
 		const savedScores = localStorage.getItem('playerScores');
 		if (savedScores) {
-			playerScores.set(JSON.parse(savedScores));
+			try {
+				playerScores.set(JSON.parse(savedScores));
+			} catch (e) {
+				playerScores.set({});
+			}
 		}
 	}
 }

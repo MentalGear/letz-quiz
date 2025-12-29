@@ -1,11 +1,11 @@
 {
-  "lu_part1": "Ondank",
-  "lu_part2": "ass der Welt Loun.",
-  "en_literal_translation_p1": "Ingratitude",
-  "en_literal_translation_p2": "is the world's reward.",
-  "en_closest_real_corresponding_saying_p1": "No good deed",
-  "en_closest_real_corresponding_saying_p2": "goes unpunished.",
-  "culturalPopularity": 3,
+  "lu_part1": "Ondank ass",
+  "lu_part2": "der Welt Loun.",
+  "en_literal_translation_p1": "Ingratitude is",
+  "en_literal_translation_p2": "the world's reward.",
+  "en_closest_real_corresponding_saying_p1": "No good deed goes unpunished,",
+  "en_closest_real_corresponding_saying_p2": "for ingratitude is the world's reward.",
+  "culturalPopularity": 4,
   "wordsDifficulty": 3,
   "vulgarity": 1
 }

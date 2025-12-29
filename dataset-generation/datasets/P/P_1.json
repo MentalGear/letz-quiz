@@ -1,11 +1,11 @@
 {
-  "lu_part1": "Ouni Hee",
-  "lu_part2": "kann dat bescht Päerd net fuerzen.",
-  "en_literal_translation_p1": "Without hay,",
-  "en_literal_translation_p2": "even the best horse can't fart.",
-  "en_closest_real_corresponding_saying_p1": "You can't make bricks",
-  "en_closest_real_corresponding_saying_p2": "without straw.",
-  "culturalPopularity": 4,
-  "wordsDifficulty": 2,
-  "vulgarity": 3
+  "lu_part1": "Ouni Hee kann dat bescht Päerd net,",
+  "lu_part2": "fuerzen.",
+  "en_literal_translation_p1": "Without a bridle, even the best horse cannot,",
+  "en_literal_translation_p2": "be driven.",
+  "en_closest_real_corresponding_saying_p1": "You can't control everything, no matter how good it is,",
+  "en_closest_real_corresponding_saying_p2": "without the right tools.",
+  "culturalPopularity": 3,
+  "wordsDifficulty": 3,
+  "vulgarity": 1
 }

@@ -1,11 +1,11 @@
 {
-  "lu_part1": "Eemol verbrannt, an zweemol bestuet",
-  "lu_part2": "mécht räich.",
-  "en_literal_translation_p1": "Once burned, twice cautious",
-  "en_literal_translation_p2": "makes rich.",
-  "en_closest_real_corresponding_saying_p1": "Once bitten, twice shy",
-  "en_closest_real_corresponding_saying_p2": "saves you from future trouble.",
-  "culturalPopularity": 3,
+  "lu_part1": "Eemol verbrannt,",
+  "lu_part2": "an zweemol bestuet mécht räich.",
+  "en_literal_translation_p1": "Once burned,",
+  "en_literal_translation_p2": "being cautious the second time makes you rich.",
+  "en_closest_real_corresponding_saying_p1": "Once bitten,",
+  "en_closest_real_corresponding_saying_p2": "twice shy.",
+  "culturalPopularity": 4,
   "wordsDifficulty": 3,
   "vulgarity": 1
 }

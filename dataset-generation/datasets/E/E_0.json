@@ -1,11 +1,11 @@
 {
-  "lu_part1": "Ëmgekéiert",
-  "lu_part2": "ass och gefuer.",
-  "en_literal_translation_p1": "Reversed",
-  "en_literal_translation_p2": "is also driven.",
-  "en_closest_real_corresponding_saying_p1": "There's more than one way",
-  "en_closest_real_corresponding_saying_p2": "to skin a cat.",
-  "culturalPopularity": 3,
-  "wordsDifficulty": 3,
+  "lu_part1": "Ëmgekéiert ass och",
+  "lu_part2": "gefuer.",
+  "en_literal_translation_p1": "Reversed is also",
+  "en_literal_translation_p2": "a way of driving.",
+  "en_closest_real_corresponding_saying_p1": "There's more than one way to skin a cat,",
+  "en_closest_real_corresponding_saying_p2": "or so they say.",
+  "culturalPopularity": 4,
+  "wordsDifficulty": 2,
   "vulgarity": 1
 }

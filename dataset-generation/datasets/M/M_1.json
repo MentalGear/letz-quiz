@@ -1,11 +1,11 @@
 {
   "lu_part1": "Wann d'Mais sat sinn,",
   "lu_part2": "ass d'Miel batter.",
-  "en_literal_translation_p1": "When the mice are full,",
-  "en_literal_translation_p2": "the flour tastes better.",
-  "en_closest_real_corresponding_saying_p1": "When you're satisfied,",
-  "en_closest_real_corresponding_saying_p2": "everything tastes better.",
-  "culturalPopularity": 2,
+  "en_literal_translation_p1": "When the stomachs are full,",
+  "en_literal_translation_p2": "the meal tastes better.",
+  "en_closest_real_corresponding_saying_p1": "Hunger is the best sauce,",
+  "en_closest_real_corresponding_saying_p2": "everything tastes better when you're hungry.",
+  "culturalPopularity": 4,
   "wordsDifficulty": 2,
   "vulgarity": 1
 }

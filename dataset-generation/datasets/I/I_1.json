@@ -1,11 +1,11 @@
 {
   "lu_part1": "E gudden Iesel stéisst sech",
   "lu_part2": "nëmmen eemol.",
-  "en_literal_translation_p1": "A good donkey kicks itself",
+  "en_literal_translation_p1": "A good donkey kicks",
   "en_literal_translation_p2": "only once.",
-  "en_closest_real_corresponding_saying_p1": "A wise man learns from his mistakes,",
-  "en_closest_real_corresponding_saying_p2": "but a fool repeats them.",
-  "culturalPopularity": 4,
-  "wordsDifficulty": 3,
+  "en_closest_real_corresponding_saying_p1": "A good horse kicks",
+  "en_closest_real_corresponding_saying_p2": "only once.",
+  "culturalPopularity": 3,
+  "wordsDifficulty": 2,
   "vulgarity": 1
 }
