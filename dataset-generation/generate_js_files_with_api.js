@@ -141,7 +141,7 @@ export async function processFile(txtFilePath) {
 
 // Function to iterate over all .txt files in the datasets folder
 export async function iterateAndGenerate(limit = null) {
-	const datasetsDir = path.join(__dirname, 'src/lib/datasets');
+	const datasetsDir = path.join(__dirname, 'datasets');
 	const txtFiles = [];
 
 	function readFiles(dir) {
