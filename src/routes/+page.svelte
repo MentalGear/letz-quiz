@@ -149,6 +149,10 @@
 		closeGame();
 	}
 
+	function handleModeChange() {
+		showOverlay = false;
+	}
+
 	// Calculate progress for the top bar
 	const progress = $derived(gameSet.length > 0 ? ((currentIndex + 1) / gameSet.length) * 100 : 0);
 	const currentScores = $derived($currentCardScores as Record<number, Record<string, boolean>>);
@@ -178,8 +182,8 @@
 			</h1>
 
 			<div class="control">
-				<label>Number of Cards</label>
-				<select bind:value={rounds}>
+				<label for="rounds-select">Number of Cards</label>
+				<select id="rounds-select" bind:value={rounds}>
 					{#each [5, 10, 15, 20, 25] as num}
 						<option value={num}>{num} Cards</option>
 					{/each}
@@ -187,8 +191,8 @@
 			</div>
 
 			<div class="control">
-				<label>Mode</label>
-				<select bind:value={mode}>
+				<label for="mode-select">Mode</label>
+				<select id="mode-select" bind:value={mode}>
 					<option value="lu">Luxembourgish Only</option>
 					<option value="literal">LU + English Literal</option>
 					<option value="correct">LU + English Equivalent</option>
@@ -197,9 +201,10 @@
 			</div>
 
 			<div class="control">
-				<label>Difficulty Level</label>
+				<label for="difficulty-min-select">Difficulty Level</label>
 				<div class="range-container">
 					<select
+						id="difficulty-min-select"
 						bind:value={$difficultyMin}
 						on:change={() => {
 							if ($difficultyMin > $difficultyMax) $difficultyMax = $difficultyMin;
@@ -209,7 +214,9 @@
 							<option value={num}>{num}</option>
 						{/each}
 					</select>
+					<label for="difficulty-max-select" class="sr-only">Maximum Difficulty</label>
 					<select
+						id="difficulty-max-select"
 						bind:value={$difficultyMax}
 						on:change={() => {
 							if ($difficultyMax < $difficultyMin) $difficultyMin = $difficultyMax;
@@ -253,11 +260,11 @@
 
 			<!-- <PlayerModal bind:this={playerModal} /> -->
 
-			<div class="control" style="display: flex; gap: 10px; margin-top: 50px; opacity: 0.5">
+			<div class="control" style="display: flex; gap: 10px; margin-top: 50px; opacity: 0.6">
 				<div class="control">
 					<!-- <label>Allow Explicitness (Max: {$explicitness})</label> -->
 					<!-- // make a switch/checkbox -->
-					<label>Allow Explicitness</label>
+					<label for="explicitnessControl">Allow Explicitness</label>
 					<div style="display: flex; gap: 10px">
 						<input
 							type="checkbox"
@@ -277,8 +284,8 @@
 				</div>
 
 				<div class="control">
-					<label>Theme</label>
-					<select bind:value={$themeMode} on:change={() => setTheme($themeMode)}>
+					<label for="theme-select">Theme</label>
+					<select id="theme-select" bind:value={$themeMode} on:change={() => setTheme($themeMode)}>
 						<option value="light">Light Mode</option>
 						<option value="dark">Dark Mode</option>
 						<option value="device">Device Settings</option>
@@ -307,7 +314,12 @@
 							</button>
 							<div class="menu-item mode-item">
 								<!-- <span class="icon">🇱🇺</span> -->
-								<select class="overlay-mode-select" bind:value={mode} on:change={toggleOverlay}>
+								<select
+									class="overlay-mode-select"
+									bind:value={mode}
+									on:change={handleModeChange}
+									aria-label="Select Game Mode"
+								>
 									<option value="lu">Luxembourgish Only</option>
 									<option value="literal">LU + English Literal</option>
 									<option value="correct">LU + English Equivalent</option>
@@ -862,5 +874,16 @@
 		cursor: pointer;
 		width: 100%;
 		margin-top: 1rem;
+	}
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border-width: 0;
 	}
 </style>
