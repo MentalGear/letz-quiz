@@ -11,20 +11,20 @@
 		initializePlayerScores,
 		resetPlayerScores,
 		explicitness,
-		initializeExplicitness
+		initializeExplicitness,
+		difficultyMin,
+		difficultyMax
 	} from '$lib/stores';
 
 	type QuizState = 'settings' | 'playing' | 'finished';
 	let state = $state<QuizState>('settings');
-	let rounds = $state(15);
+	let rounds = $state(10);
 	let mode = $state('lu');
 	let gameSet = $state<any[]>([]);
 	let container: HTMLElement | undefined = $state();
 	let currentIndex = $state(0);
 	let showConfirm = $state(false);
 	let showOverlay = $state(false);
-	let popularityMin = $state(1);
-	let popularityMax = $state(5);
 	let difficulty = $state('medium');
 	import PlayerModal from '$lib/components/PlayerModal.svelte';
 
@@ -37,8 +37,27 @@
 	initializeExplicitness();
 
 	function startGame() {
-		gameSet = [...sayingsData]
-			.filter((s) => s.vulgarity <= $explicitness)
+		const scoreMap: Record<number, { min: number; max: number }> = {
+			1: { min: 1.0, max: 1.5 },
+			2: { min: 2.0, max: 2.0 },
+			3: { min: 2.5, max: 2.5 },
+			4: { min: 3.0, max: 3.0 },
+			5: { min: 3.5, max: 4.0 }
+		};
+
+		const minScore = scoreMap[$difficultyMin].min;
+		const maxScore = scoreMap[$difficultyMax].max;
+
+		const filtered = [...sayingsData].filter((s) => {
+			const score = (6 - s.culturalPopularity + s.wordsDifficulty) / 2;
+			return s.vulgarity <= $explicitness && score >= minScore && score <= maxScore;
+		});
+
+		console.log(
+			`Starting game with ${filtered.length} matching cards. Level Range: [${$difficultyMin}, ${$difficultyMax}] (Score: ${minScore}-${maxScore})`
+		);
+
+		gameSet = filtered
 			.sort(() => 0.5 - Math.random())
 			.slice(0, rounds)
 			.map((s) => ({ ...s, isRevealed: false }));
@@ -108,9 +127,21 @@
 	}
 
 	function reportIssue() {
+		const currentCard = gameSet[currentIndex];
+		let cardDetails = '';
+
+		if (currentCard) {
+			cardDetails = `\n\n---\nCard Info:\n`;
+			cardDetails += `LU: ${currentCard.lu_part1} ${currentCard.lu_part2}\n`;
+			cardDetails += `Literal: ${currentCard.en_literal_translation_p1} ${currentCard.en_literal_translation_p2}\n`;
+			if (currentCard.en_closest_real_corresponding_saying_p1) {
+				cardDetails += `Equivalent: ${currentCard.en_closest_real_corresponding_saying_p1} ${currentCard.en_closest_real_corresponding_saying_p2}\n`;
+			}
+		}
+
 		const subject = encodeURIComponent('Lux Quiz Issue Report');
-		const body = encodeURIComponent('Please describe the issue you encountered...');
-		window.location.href = `mailto:support@example.com?subject=${subject}&body=${body}`;
+		const body = encodeURIComponent('Please describe the issue you encountered...' + cardDetails);
+		window.location.href = `mailto:gen_letzquiz@tomfaber.id?subject=${subject}&body=${body}`;
 	}
 
 	function quitGame() {
@@ -164,12 +195,12 @@
 			</div>
 
 			<div class="control">
-				<label>Difficulty Range</label>
+				<label>Difficulty Level</label>
 				<div class="range-container">
 					<select
-						bind:value={popularityMin}
+						bind:value={$difficultyMin}
 						on:change={() => {
-							if (popularityMin > popularityMax) popularityMax = popularityMin;
+							if ($difficultyMin > $difficultyMax) $difficultyMax = $difficultyMin;
 						}}
 					>
 						{#each Array.from({ length: 5 }, (_, i) => i + 1) as num}
@@ -177,9 +208,9 @@
 						{/each}
 					</select>
 					<select
-						bind:value={popularityMax}
+						bind:value={$difficultyMax}
 						on:change={() => {
-							if (popularityMax < popularityMin) popularityMin = popularityMax;
+							if ($difficultyMax < $difficultyMin) $difficultyMin = $difficultyMax;
 						}}
 					>
 						{#each Array.from({ length: 5 }, (_, i) => i + 1) as num}
@@ -187,7 +218,6 @@
 						{/each}
 					</select>
 				</div>
-				<!-- <span>Min: {popularityMin}, Max: {popularityMax}</span> -->
 			</div>
 
 			<!-- <div class="control">
@@ -230,8 +260,8 @@
 						<input
 							type="checkbox"
 							id="explicitnessControl"
-							checked={$explicitness > 3}
-							on:change={() => explicitness.set($explicitness > 3 ? 3 : 5)}
+							checked={$explicitness > 1}
+							on:change={() => explicitness.set($explicitness > 1 ? 1 : 5)}
 						/>
 						<label for="explicitnessControl">On</label>
 					</div>
@@ -449,6 +479,7 @@
 		border: 2px solid #ddd;
 		background: white;
 		font-size: 1rem;
+		font-weight: bold;
 	}
 	.range-container {
 		display: flex;

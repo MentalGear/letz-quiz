@@ -5,6 +5,8 @@ export const playerCount: Writable<number> = writable(0);
 export const playerScores: Writable<Record<string, number>> = writable({});
 export const currentCardScores: Writable<Record<number, Record<string, boolean>>> = writable({});
 export const explicitness: Writable<number> = writable(1);
+export const difficultyMin: Writable<number> = writable(1);
+export const difficultyMax: Writable<number> = writable(5);
 
 export function initializeTheme() {
 	if (typeof window !== 'undefined') {
@@ -65,6 +67,22 @@ export function initializeExplicitness() {
 		}
 		explicitness.subscribe((value) => {
 			localStorage.setItem('explicitness', value.toString());
+		});
+
+		const savedDiffMin = localStorage.getItem('difficultyMin');
+		if (savedDiffMin) {
+			difficultyMin.set(parseInt(savedDiffMin));
+		}
+		difficultyMin.subscribe((value) => {
+			localStorage.setItem('difficultyMin', value.toString());
+		});
+
+		const savedDiffMax = localStorage.getItem('difficultyMax');
+		if (savedDiffMax) {
+			difficultyMax.set(parseInt(savedDiffMax));
+		}
+		difficultyMax.subscribe((value) => {
+			localStorage.setItem('difficultyMax', value.toString());
 		});
 	}
 }
