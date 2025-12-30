@@ -167,7 +167,7 @@
 	{#if state === 'settings'}
 		<div class="screen settings">
 			<h1
-				style="margin-bottom: 0; letter-spacing: 1px; color: var(--text-blue); text-transform: uppercase;"
+				style="margin-bottom: -10px; letter-spacing: 0px; color: var(--text-blue); text-transform: uppercase;"
 			>
 				Lëtz Quiz
 			</h1>
