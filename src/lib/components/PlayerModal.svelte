@@ -113,8 +113,8 @@
 	}
 
 	.modal-content {
-		background: #f8f9fa;
-		color: #333;
+		background: var(--bg-card);
+		color: var(--text-main);
 		padding: 2rem;
 		border-radius: 1rem;
 		width: 100%;
@@ -122,11 +122,7 @@
 		max-height: 80vh;
 		overflow-y: auto;
 		box-sizing: border-box;
-	}
-
-	:global(body.dark-mode) .modal-content {
-		background: #2d3436;
-		color: #f8f9fa;
+		box-shadow: var(--shadow-card);
 	}
 
 	.player-input-container {
@@ -148,21 +144,21 @@
 		flex: 1;
 		padding: 0.75rem 1rem;
 		border-radius: 1rem;
-		border: 2px solid #ddd;
-		background: white;
+		border: 2px solid var(--border-color);
+		background: var(--bg-input);
+		color: var(--text-main);
 		font-size: 1rem;
-		font-family: 'Segoe UI', system-ui, sans-serif;
+		font-family: var(--font-main);
 	}
 
-	:global(body.dark-mode) .player-input {
-		background: #3d4448;
-		color: #f8f9fa;
-		border-color: #666;
+	.player-input:focus {
+		outline: none;
+		border-color: var(--color-blue);
 	}
 
 	.remove-player {
-		background: #ef3340;
-		color: white;
+		background: var(--color-red);
+		color: var(--text-on-primary);
 		font-size: 1.5em;
 		border: none;
 		width: 40px;
@@ -172,15 +168,16 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		transition: transform 0.2s ease;
 	}
 
-	:global(body.dark-mode) .remove-player {
-		background: #ef3340;
+	.remove-player:active {
+		transform: scale(0.9);
 	}
 
 	.btn-confirm {
-		background: #ef3340;
-		color: white;
+		background: var(--color-red);
+		color: var(--text-on-primary);
 		border: none;
 		padding: 0.75rem 1.5rem;
 		border-radius: 100px;
@@ -188,6 +185,7 @@
 		font-size: 1rem;
 		cursor: pointer;
 		margin-top: 2rem;
-		font-family: 'Segoe UI', system-ui, sans-serif;
+		font-family: var(--font-main);
+		box-shadow: var(--color-red-glow);
 	}
 </style>

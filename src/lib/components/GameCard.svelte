@@ -117,18 +117,13 @@
 		width: 60svw;
 		max-width: 500px;
 		height: 60svh;
-		background: white;
+		background: var(--bg-card);
 		border-radius: 2rem;
-		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+		box-shadow: var(--shadow-card);
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		padding: 2rem;
-	}
-
-	:global(body.dark-mode) .card {
-		background: #3d4448;
-		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 	}
 
 	.content {
@@ -138,19 +133,12 @@
 	.text-block.lu {
 		font-size: 1.8rem;
 		font-weight: 800;
-		color: #2d3436;
+		color: var(--text-main);
 	}
 	.text-block.en {
 		font-size: 1.2rem;
-		color: #636e72;
+		color: var(--text-muted);
 		font-style: italic;
-	}
-
-	:global(body.dark-mode) .text-block.lu {
-		color: #f8f9fa;
-	}
-	:global(body.dark-mode) .text-block.en {
-		color: #b2bec3;
 	}
 
 	.part1 {
@@ -158,24 +146,15 @@
 		margin-bottom: 0.5rem;
 	}
 	.lu .part1 {
-		color: #00a3e0;
-	}
-
-	:global(body.dark-mode) .lu .part1 {
-		color: #00a3e0;
+		color: var(--text-blue);
 	}
 
 	.divider {
 		height: 2px;
 		width: 40px;
-		background: #eee;
+		background: var(--border-color);
 		margin: 2rem auto;
 	}
-
-	:global(body.dark-mode) .divider {
-		background: #666;
-	}
-
 	.word {
 		display: inline-block;
 		margin-right: 0.35rem;
@@ -206,9 +185,10 @@
 
 	.score-button {
 		padding: 0.75rem 1.5rem;
-		border: 2px solid #ddd;
+		border: 2px solid var(--border-color);
 		border-radius: 100px;
-		background: white;
+		background: var(--bg-card);
+		color: var(--text-main);
 		cursor: pointer;
 		font-size: 1.1rem;
 		transition: all 0.3s ease;
@@ -217,8 +197,9 @@
 	}
 
 	.score-button.active {
-		background: #ef3340;
-		color: white;
-		border-color: #ef3340;
+		background: var(--color-red);
+		color: var(--text-on-primary);
+		border-color: var(--color-red);
+		box-shadow: var(--color-red-glow);
 	}
 </style>

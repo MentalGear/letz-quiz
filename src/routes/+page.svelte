@@ -166,11 +166,13 @@
 <main>
 	{#if state === 'settings'}
 		<div class="screen settings">
-			<h1 style="margin-bottom: 0; letter-spacing: 1px; color: #00a3e0; text-transform: uppercase;">
+			<h1
+				style="margin-bottom: 0; letter-spacing: 1px; color: var(--text-blue); text-transform: uppercase;"
+			>
 				Lëtz Quiz
 			</h1>
 			<h1
-				style="font-size: 2.5rem; margin-top: 0;  letter-spacing: 1px; font-weight: medium; opacity: 0.8; margin-bottom: 50px; color: #ef3340; "
+				style="font-size: 2.5rem; margin-top: 0;  letter-spacing: 1px; font-weight: medium; opacity: 0.8; margin-bottom: 50px; color: var(--text-red); "
 			>
 				Spréchwierder
 			</h1>
@@ -417,26 +419,12 @@
 </main>
 
 <style>
-	:global(body) {
-		margin: 0;
-		background: #f8f9fa;
-		font-family: 'Segoe UI', system-ui, sans-serif;
-		overflow: hidden;
-		transition: background 0.3s ease;
-	}
-
-	:global(body.dark-mode) {
-		background: #2d3436;
-	}
-	:global(body.light-mode) {
-		background: #f8f9fa;
-	}
-
 	main {
 		height: 100svh;
 		width: 100svw;
 		display: flex;
 		flex-direction: column;
+		color: var(--text-main);
 	}
 
 	.divider {
@@ -468,7 +456,7 @@
 	}
 	label {
 		font-weight: 700;
-		color: #444;
+		color: var(--text-main);
 		display: block;
 		margin-bottom: 0.5rem;
 	}
@@ -476,10 +464,19 @@
 		width: 100%;
 		padding: 1rem;
 		border-radius: 1rem;
-		border: 2px solid #ddd;
-		background: white;
+		border: 2px solid var(--border-color);
+		background: var(--bg-card);
+		color: var(--text-main);
 		font-size: 1rem;
 		font-weight: bold;
+	}
+	select:focus {
+		outline: none;
+		border-color: var(--color-blue);
+	}
+	option {
+		background: var(--bg-card);
+		color: var(--text-main);
 	}
 	.range-container {
 		display: flex;
@@ -489,52 +486,17 @@
 		width: 50%;
 	}
 
-	/* h1 {
-		font-weight: medium;
-		text-transform: uppercase;
-	} */
-
-	:global(body.dark-mode) h1 {
-		color: #f8f9fa;
-	}
-
-	:global(body.dark-mode) h1 {
-		color: #f8f9fa;
-	}
-
-	:global(body.dark-mode) label {
-		color: #f8f9fa;
-	}
-
-	:global(body.dark-mode) span {
-		color: #f8f9fa;
-	}
-
-	:global(body.dark-mode) select {
-		background: #3d4448;
-		color: #f8f9fa;
-		border-color: #666;
-	}
-
-	:global(body.dark-mode) option {
-		background: #3d4448;
-		color: #f8f9fa;
-	}
-
 	.progress-bar-container {
 		width: 100%;
 		height: 10px;
-		background-color: #eeeeee05;
+		background-color: var(--progress-bg);
 		position: fixed;
 		bottom: 0;
-		/* border-radius: 5px; */
-		/* margin-bottom: 1rem; */
 	}
 
 	.progress-bar {
 		height: 100%;
-		background-color: #00a3e0;
-		/* border-radius: 5px; */
+		background-color: var(--color-blue);
 		transition: width 0.3s ease-in;
 	}
 
@@ -560,7 +522,7 @@
 		position: absolute;
 		top: 1rem;
 		left: 1rem;
-		background: rgba(238, 238, 238, 0.8);
+		background: var(--bg-menu);
 		backdrop-filter: blur(10px);
 		border: none;
 		width: 48px;
@@ -570,9 +532,9 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		color: #666;
+		color: var(--text-main);
 		z-index: 100;
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+		box-shadow: var(--shadow-btn);
 		transition: all 0.2s ease;
 	}
 
@@ -587,24 +549,18 @@
 		opacity: 0.5;
 	}
 
-	:global(body.dark-mode) .menu-btn.floating {
-		background: rgba(68, 68, 68, 0.8);
-		color: #f8f9fa;
-	}
-
 	.menu-overlay {
 		position: fixed;
 		top: 0;
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background: rgba(0, 0, 0, 0.4);
+		background: var(--bg-overlay);
 		backdrop-filter: blur(15px);
 		z-index: 200;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		/* animation: fadeIn 0.3s ease-out; */ /* Removed as Svelte transition will handle this */
 	}
 
 	/* @keyframes fadeIn {
@@ -617,19 +573,13 @@
 	} */
 
 	.menu-content {
-		background: white;
+		background: var(--bg-card);
 		width: 90%;
 		max-width: 320px;
 		border-radius: 2rem;
 		padding: 2rem;
-		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-		/* transform: translateY(0); */ /* Removed as Svelte transition will handle this */
-		/* animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1); */ /* Removed as Svelte transition will handle this */
-	}
-
-	:global(body.dark-mode) .menu-content {
-		background: #2d3436;
-		color: #f8f9fa;
+		box-shadow: var(--shadow-card);
+		color: var(--text-main);
 	}
 
 	/* @keyframes slideUp {
@@ -646,7 +596,7 @@
 	.menu-title {
 		margin-top: 0;
 		text-align: center;
-		color: #00a3e0;
+		color: var(--text-blue);
 		text-transform: uppercase;
 		letter-spacing: 2px;
 		font-size: 1.2rem;
@@ -660,13 +610,13 @@
 	}
 
 	.menu-item {
-		background: #f1f3f5;
+		background: var(--bg-secondary);
 		border: none;
 		padding: 1.25rem;
 		border-radius: 1rem;
 		font-size: 1.1rem;
 		font-weight: 600;
-		color: #444;
+		color: var(--text-main);
 		cursor: pointer;
 		display: flex;
 		align-items: center;
@@ -676,17 +626,8 @@
 		width: 100%;
 	}
 
-	:global(body.dark-mode) .menu-item {
-		background: #3d4448;
-		color: #f8f9fa;
-	}
-
 	.menu-item:hover {
-		background: #e9ecef;
-	}
-
-	:global(body.dark-mode) .menu-item:hover {
-		background: #4a5459;
+		filter: brightness(0.95);
 	}
 
 	.menu-item:active {
@@ -694,7 +635,7 @@
 	}
 
 	.menu-item.quit {
-		color: #ef3340;
+		color: var(--color-red);
 		margin-top: 1rem;
 	}
 
@@ -734,15 +675,16 @@
 		position: absolute;
 		bottom: 7rem;
 		left: 2rem;
-		background: white;
+		background: var(--bg-card);
 		border-radius: 1rem;
-		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+		box-shadow: var(--shadow-card);
 		padding: 1rem;
 		z-index: 101;
 		display: flex;
 		flex-direction: column;
 		gap: 0.5rem;
 		width: 200px;
+		color: var(--text-main);
 	}
 
 	.theme-menu button {
@@ -753,10 +695,11 @@
 		border-radius: 0.5rem;
 		font-size: 1rem;
 		text-align: left;
+		color: var(--text-main);
 	}
 
 	.theme-menu button:hover {
-		background: #f0f0f0;
+		background: var(--bg-secondary);
 	}
 
 	.actions-container {
@@ -771,8 +714,8 @@
 
 	.btn-action.floating-reveal {
 		grid-area: 1 / 1;
-		background: #00a3e0;
-		color: white;
+		background: var(--color-blue);
+		color: var(--text-on-primary);
 		border: none;
 		padding: 1rem 0;
 		width: 180px;
@@ -782,7 +725,7 @@
 		font-size: 1.2rem;
 		cursor: pointer;
 		white-space: nowrap;
-		box-shadow: 0 4px 15px rgba(0, 163, 224, 0.3);
+		box-shadow: var(--color-blue-glow);
 		transition:
 			transform 0.15s ease,
 			box-shadow 0.15s ease;
@@ -790,8 +733,8 @@
 
 	.btn-action.floating-next {
 		grid-area: 1 / 1;
-		background: #ef3340;
-		color: white;
+		background: var(--color-red);
+		color: var(--text-on-primary);
 		border: none;
 		padding: 1rem 0;
 		width: 180px;
@@ -801,7 +744,7 @@
 		font-size: 1.2rem;
 		cursor: pointer;
 		white-space: nowrap;
-		box-shadow: 0 4px 15px rgba(239, 51, 64, 0.3);
+		box-shadow: var(--color-red-glow);
 		transition:
 			transform 0.15s ease,
 			box-shadow 0.15s ease;
@@ -817,7 +760,7 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background: rgba(0, 0, 0, 0.5);
+		background: var(--bg-overlay);
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -825,16 +768,13 @@
 	}
 
 	.confirm-dialog {
-		background: white;
+		background: var(--bg-card);
+		color: var(--text-main);
 		padding: 2rem;
 		border-radius: 1rem;
 		text-align: center;
 		max-width: 400px;
-	}
-
-	:global(body.dark-mode) .confirm-dialog {
-		background: #3d4448;
-		color: #f8f9fa;
+		box-shadow: var(--shadow-card);
 	}
 
 	.confirm-buttons {
@@ -845,8 +785,8 @@
 	}
 
 	.btn-cancel {
-		background: #ccc;
-		color: white;
+		background: var(--bg-secondary);
+		color: var(--text-main);
 		border: none;
 		padding: 1rem 2rem;
 		border-radius: 100px;
@@ -858,13 +798,9 @@
 	.finished {
 		justify-content: center;
 		align-items: center;
-		background: white;
+		background: var(--bg-main);
+		color: var(--text-main);
 		text-align: center;
-	}
-
-	:global(body.dark-mode) .finished {
-		background: #2d3436;
-		color: #f8f9fa;
 	}
 
 	.finished-content {
@@ -875,7 +811,7 @@
 
 	.finished-title {
 		font-size: 3rem;
-		color: #00a3e0;
+		color: var(--text-blue);
 		margin-bottom: 1rem;
 	}
 
@@ -892,8 +828,8 @@
 	}
 
 	.btn-confirm {
-		background: #ef3340;
-		color: white;
+		background: var(--color-red);
+		color: var(--text-on-primary);
 		border: none;
 		padding: 1rem 2rem;
 		border-radius: 100px;
@@ -903,8 +839,8 @@
 	}
 
 	.btn-primary {
-		background: #ef3340;
-		color: white;
+		background: var(--color-red);
+		color: var(--text-on-primary);
 		border: none;
 		padding: 1.5rem 3rem;
 		border-radius: 100px;
@@ -912,12 +848,13 @@
 		font-size: 1.2rem;
 		cursor: pointer;
 		width: 100%;
+		box-shadow: var(--color-red-glow);
 	}
 
 	.btn-secondary {
 		background: transparent;
-		color: #666;
-		border: 2px solid #ddd;
+		color: var(--text-main);
+		border: 2px solid var(--border-color);
 		padding: 0.75rem 1.5rem;
 		border-radius: 100px;
 		font-weight: bold;
@@ -925,10 +862,5 @@
 		cursor: pointer;
 		width: 100%;
 		margin-top: 1rem;
-	}
-
-	:global(body.dark-mode) .btn-secondary {
-		color: #f8f9fa;
-		border-color: #666;
 	}
 </style>
